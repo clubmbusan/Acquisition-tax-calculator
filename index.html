@@ -1,4 +1,4 @@
-          <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -30,8 +30,7 @@
 
                 <!-- 금액 입력 필드 -->
                 <label for="realEstateValue">부동산 금액 (원):</label>
-                <input type="text" id="realEstateValue" placeholder="예: 100,000,000">           
-                </select>
+                <input type="text" id="realEstateValue" placeholder="예: 100,000,000">
             </div>
 
             <!-- 차량 추가 옵션 -->
@@ -51,15 +50,17 @@
                 <label for="otherAssetValue">기타 자산 금액 (원):</label>
                 <input type="text" id="otherAssetValue" placeholder="예: 50,000,000">
             </div>
-                  <!-- 버튼 4개 -->
+
+            <!-- 버튼 4개 -->
             <div id="actionButtons" style="display: flex; justify-content: space-between; margin-top: 10px;">
                 <button type="button" class="action-btn" id="saleButton">매매</button>
                 <button type="button" class="action-btn" id="giftButton">증여</button>
                 <button type="button" class="action-btn" id="inheritanceButton">상속</button>
                 <button type="button" class="action-btn" id="originalButton">원시취득</button>
             </div>
+
             <!-- 계산하기 버튼 -->
-            <button type="button" id="calculateButton">계산하기</button>
+            <button type="button" id="calculateButton" style="margin-top: 15px;">계산하기</button>
         </form>
 
         <!-- 결과 -->
@@ -68,3 +69,4 @@
 
     <script src="script.js"></script>
 </body>
+</html>
