@@ -56,7 +56,26 @@
             <button type="button" class="action-btn" id="giftButton">증여취득</button>
             <button type="button" class="action-btn" id="inheritanceButton">상속취득</button>
             <button type="button" class="action-btn" id="originalButton">원시취득</button>
+
             
+               <!-- 증여취득 모달 -->
+<div id="giftModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <h3>증여 취득 종류 선택</h3>
+
+        <!-- 증여 종류 선택 -->
+        <label for="giftType">증여 종류:</label>
+        <select id="giftType">
+            <option value="general">일반 증여</option>
+            <option value="corporate">법인 증여</option>
+        </select>
+
+        <!-- 확인 버튼 -->
+        <button type="button" id="confirmGiftType" style="margin-top: 15px;">확인</button>
+    </div>
+</div>
+        
             <!-- 계산하기 버튼 -->
             <button type="button" id="calculateButton" style="margin-top: 15px;">계산하기</button>
         </form>
