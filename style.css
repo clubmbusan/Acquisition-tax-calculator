@@ -1,4 +1,4 @@
- body {
+body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     margin: 20px;
@@ -33,13 +33,13 @@ button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px; /* 입력 필드와 동일한 padding */
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    width: 100%;
+    width: 100%; /* 입력 필드와 동일한 너비 */
     box-sizing: border-box;
-    margin-bottom: 10px;
+    margin-bottom: 15px; /* 입력 필드와 동일한 margin */
 }
 
 button:hover {
