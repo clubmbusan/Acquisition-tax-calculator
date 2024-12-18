@@ -172,5 +172,5 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
         `;
     }); // 닫는 괄호 및 세미콜론 위치 확인
-}); // DOMContentLoaded 이벤트 닫는 괄호
+
     
