@@ -1,73 +1,57 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 모달 열기 및 닫기 기능
-    const modalButtons = document.querySelectorAll('.acquisition-btn'); // 모달 여는 버튼
-    const modals = document.querySelectorAll('.modal'); // 모든 모달
-    const closeButtons = document.querySelectorAll('.close'); // 닫기 버튼
+    const buttons = document.querySelectorAll('.acquisition-btn');
+    const propertyTypeLabel = document.getElementById('propertyTypeLabel');
+    const propertyType = document.getElementById('propertyType');
+    const assetValueLabel = document.getElementById('assetValueLabel');
+    const assetValue = document.getElementById('assetValue');
 
-    modalButtons.forEach(button => {
+    // 모달 버튼 이벤트 리스너
+    buttons.forEach(button => {
         button.addEventListener('click', () => {
-            const modalId = button.dataset.modal; // 버튼에 설정된 data-modal 속성
-            document.getElementById(modalId).style.display = 'block'; // 해당 모달 열기
+            const type = button.dataset.type;
+
+            // "매매" 선택 시
+            if (type === 'sale') {
+                propertyTypeLabel.style.display = 'block';
+                propertyType.style.display = 'block';
+
+                assetValueLabel.style.display = 'none';
+                assetValue.style.display = 'none';
+            }
         });
     });
 
-    closeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            button.closest('.modal').style.display = 'none'; // 닫기 버튼 클릭 시 모달 닫기
-        });
-    });
-
-    // 모달 내 필드 표시 동작
-    const handleAssetTypeChange = (modalId) => {
-        const assetTypeSelect = document.querySelector(`#${modalId} .assetTypeSelect`);
-        const fields = {
-            realEstate: document.querySelector(`#${modalId} .realEstateField`),
-            vehicle: document.querySelector(`#${modalId} .vehicleField`),
-            other: document.querySelector(`#${modalId} .otherField`),
-        };
-
-        assetTypeSelect.addEventListener('change', () => {
-            Object.values(fields).forEach(field => field.style.display = 'none');
-            fields[assetTypeSelect.value].style.display = 'block'; // 선택된 필드 표시
-        });
-    };
-
-    // 각 모달에 대해 동작 리스너 연결
-    ['modalSale', 'modalGift', 'modalInheritance', 'modalOriginal'].forEach(modalId => {
-        handleAssetTypeChange(modalId);
-    });
-
-    // 계산 버튼 이벤트 리스너
-    const calculateTax = (modalId) => {
-        const assetType = document.querySelector(`#${modalId} .assetTypeSelect`).value;
-        let assetValue = 0;
-        let taxRate = 0;
-
-        if (assetType === 'realEstate') {
-            assetValue = parseInt(document.querySelector(`#${modalId} .realEstateValue`).value.replace(/,/g, '') || '0', 10);
-            taxRate = 0.015; // 예시 세율
-        } else if (assetType === 'vehicle') {
-            assetValue = parseInt(document.querySelector(`#${modalId} .vehicleValue`).value.replace(/,/g, '') || '0', 10);
-            taxRate = 0.05;
-        } else if (assetType === 'other') {
-            assetValue = parseInt(document.querySelector(`#${modalId} .otherValue`).value.replace(/,/g, '') || '0', 10);
-            taxRate = 0.03;
+    // 부동산 종류 선택 이벤트
+    propertyType.addEventListener('change', () => {
+        if (propertyType.value) {
+            assetValueLabel.style.display = 'block';
+            assetValue.style.display = 'block';
+        } else {
+            assetValueLabel.style.display = 'none';
+            assetValue.style.display = 'none';
         }
+    });
 
-        const acquisitionTax = Math.floor(assetValue * taxRate);
-        const totalTax = acquisitionTax;
+    // 계산 버튼 이벤트
+    document.getElementById('calculateButton').addEventListener('click', () => {
+        const additionalCosts = parseInt(document.getElementById('additionalCosts').value.replace(/,/g, '') || '0', 10);
+        let totalTax = 0;
 
-        document.querySelector(`#${modalId} .result`).innerHTML = `
-            <h3>계산 결과</h3>
-            <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
-            <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
-        `;
-    };
+        if (propertyType.value && assetValue.value) {
+            const assetValueNum = parseInt(assetValue.value.replace(/,/g, '') || '0', 10);
+            const taxRate = propertyType.value === 'residential1' ? 0.015 : 0.04;
 
-    // 각 모달에 계산 버튼 연결
-    ['modalSale', 'modalGift', 'modalInheritance', 'modalOriginal'].forEach(modalId => {
-        document.querySelector(`#${modalId} .calculateButton`).addEventListener('click', () => {
-            calculateTax(modalId);
-        });
+            const acquisitionTax = Math.floor(assetValueNum * taxRate);
+            totalTax = acquisitionTax + additionalCosts;
+
+            document.getElementById('result').innerHTML = `
+                <h3>계산 결과</h3>
+                <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
+                <p>기타 비용: ${additionalCosts.toLocaleString()} 원</p>
+                <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
+            `;
+        } else {
+            alert('부동산 종류와 금액을 입력해 주세요.');
+        }
     });
 });
