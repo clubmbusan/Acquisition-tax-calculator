@@ -73,44 +73,63 @@ button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 어두운 배경 */
+    background: rgba(0, 0, 0, 0.5); /* 어두운 반투명 배경 */
     z-index: 9999; /* 가장 위에 표시 */
 }
 
 /* ====== 모달 콘텐츠 스타일 ====== */
 .modal-content {
-    background: #fff;
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px; /* 모달 최대 너비 */
+    max-width: 600px; /* 계산기와 동일한 최대 너비 */
     box-sizing: border-box;
+    text-align: center; /* 내용 가운데 정렬 */
 }
 
-/* ====== 모달 내 입력 필드 스타일 ====== */
+/* ====== 입력 필드 및 셀렉트 박스 스타일 ====== */
 .modal-content select, 
 .modal-content input {
-    width: 100%; /* 너비 통일 */
+    width: 100%; /* 입력 필드와 버튼 너비 통일 */
     padding: 10px; /* 패딩 통일 */
-    margin-bottom: 15px; /* 하단 여백 */
+    margin-bottom: 15px; /* 하단 여백 추가 */
     border: 1px solid #ddd;
-    border-radius: 5px; /* 모서리 둥글기 */
+    border-radius: 5px;
+    font-size: 16px;
     box-sizing: border-box;
-    font-size: 16px; /* 글자 크기 */
 }
 
-/* ====== 모달 확인 버튼 스타일 ====== */
+/* ====== 모달 버튼 공통 스타일 ====== */
 .modal-content button {
-    width: 100%; /* 너비 통일 */
+    width: 100%; /* 버튼 너비 통일 */
     padding: 10px; /* 패딩 통일 */
-    margin-top: 10px;
-    background-color: #FF4C4C; /* 붉은색 버튼 */
-    color: white;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    color: white;
+    box-sizing: border-box;
+    margin-bottom: 10px; /* 버튼 간 간격 통일 */
+}
+
+/* ====== 확인 버튼 스타일 ====== */
+.modal-content button#confirmGiftType {
+    background-color: #FF4C4C; /* 붉은색 */
+}
+
+.modal-content button#confirmGiftType:hover {
+    background-color: #E03B3B; /* 어두운 붉은색 */
+}
+
+/* ====== 닫기 버튼 스타일 ====== */
+.modal-content button#closeGiftModal {
+    background-color: #808080; /* 회색 */
+}
+
+.modal-content button#closeGiftModal:hover {
+    background-color: #606060; /* 어두운 회색 */
 }
 
 .modal-content button:hover {
