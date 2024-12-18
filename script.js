@@ -18,48 +18,74 @@ document.addEventListener('DOMContentLoaded', () => {
     // 초기값 설정: 기본으로 "부동산" 필드 표시
     assetType.dispatchEvent(new Event('change'));
 
-    // === [2] 매매 모달 관련 코드 ===
-    const saleModal = document.getElementById('saleModal');
-    const confirmSaleType = document.getElementById('confirmSaleType');
-    const saleCategory = document.getElementById('saleCategory');
-    const singleOrMultiOptions = document.getElementById('singleOrMultiOptions');
-    const vehicleOptions = document.getElementById('vehicleOptions');
-    const otherOptions = document.getElementById('otherOptions');
+   // === [2] 매매 모달 관련 코드 ===
+const saleButton = document.getElementById('saleButton');   // 매매취득 버튼
+const saleModal = document.getElementById('saleModal');     // 매매취득 모달
+const confirmSaleType = document.getElementById('confirmSaleType'); // 확인 버튼
+const closeSaleModal = document.getElementById('closeSaleModal');   // 닫기 버튼
 
-    // 대분류 선택 이벤트: 매매 모달에서 선택된 대분류에 따라 추가 옵션 표시
-    saleCategory.addEventListener('change', () => {
-        singleOrMultiOptions.style.display = 'none';
-        vehicleOptions.style.display = 'none';
-        otherOptions.style.display = 'none';
+// 매매취득 버튼 클릭 시 모달 표시
+saleButton.addEventListener('click', () => {
+    saleModal.style.display = 'flex';
+});
 
-        if (saleCategory.value === 'singleHousehold' || saleCategory.value === 'multiHousehold') {
-            singleOrMultiOptions.style.display = 'block';
-        } else if (saleCategory.value === 'vehicle') {
-            vehicleOptions.style.display = 'block';
-        } else if (saleCategory.value === 'other') {
-            otherOptions.style.display = 'block';
-        }
-    });
+// 대분류 선택 이벤트
+const saleCategory = document.getElementById('saleCategory');
+const singleOrMultiOptions = document.getElementById('singleOrMultiOptions');
+const vehicleOptions = document.getElementById('vehicleOptions');
+const otherOptions = document.getElementById('otherOptions');
 
-    // 매매 모달 확인 버튼 클릭 이벤트
-    confirmSaleType.addEventListener('click', () => {
-        const saleAmount = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, ''), 10);
+saleCategory.addEventListener('change', () => {
+    singleOrMultiOptions.style.display = 'none';
+    vehicleOptions.style.display = 'none';
+    otherOptions.style.display = 'none';
 
-        if (isNaN(saleAmount) || saleAmount <= 0) {
-            alert('유효한 금액을 입력하세요.');
-            return;
-        }
+    if (saleCategory.value === 'singleHousehold' || saleCategory.value === 'multiHousehold') {
+        singleOrMultiOptions.style.display = 'block';
+    } else if (saleCategory.value === 'vehicle') {
+        vehicleOptions.style.display = 'block';
+    } else if (saleCategory.value === 'other') {
+        otherOptions.style.display = 'block';
+    }
+});
 
-        const selectedCategory = saleCategory.value;
-        const acquisitionTax = Math.floor(saleAmount * 0.01); // 예시 세율
-        updateResult('매매 취득 계산 결과', `
-            <p>대분류: ${selectedCategory}</p>
-            <p>취득 금액: ${saleAmount.toLocaleString()} 원</p>
-            <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
-        `);
+// 확인 버튼 클릭 이벤트
+confirmSaleType.addEventListener('click', () => {
+    const saleAmount = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, ''), 10);
 
+    if (isNaN(saleAmount) || saleAmount <= 0) {
+        alert('유효한 금액을 입력하세요.');
+        return;
+    }
+
+    const selectedCategory = saleCategory.value;
+    const acquisitionTax = Math.floor(saleAmount * 0.01); // 예시 세율
+    updateResult('매매 취득 계산 결과', `
+        <p>대분류: ${selectedCategory}</p>
+        <p>취득 금액: ${saleAmount.toLocaleString()} 원</p>
+        <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
+    `);
+
+    saleModal.style.display = 'none';
+});
+
+// 닫기 버튼 클릭 이벤트
+closeSaleModal.addEventListener('click', () => {
+    saleModal.style.display = 'none';
+});
+
+// 모달 외부 클릭 시 닫기
+window.addEventListener('click', (e) => {
+    if (e.target === saleModal) {
         saleModal.style.display = 'none';
-    });
+    }
+});
+
+// 공통 결과 업데이트 함수
+function updateResult(title, details) {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `<h3>${title}</h3>${details}`;
+}
 
     // === [3] 증여 모달 관련 코드 ===
     const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
