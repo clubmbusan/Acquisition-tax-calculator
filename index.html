@@ -10,54 +10,36 @@
     <div class="calculator">
         <h1>취득세 계산기 <strong>(2024년 기준)</strong></h1>
 
-        <!-- 취득의 종류 버튼 -->
+        <!-- 모달 버튼 -->
         <div id="acquisitionButtons">
-            <button class="acquisition-btn" data-type="realEstate">부동산</button>
-            <button class="acquisition-btn" data-type="vehicle">차량</button>
-            <button class="acquisition-btn" data-type="other">기타</button>
+            <button class="acquisition-btn" data-type="sale">매매</button>
+            <button class="acquisition-btn" data-type="gift">증여</button>
+            <button class="acquisition-btn" data-type="inheritance">상속</button>
+            <button class="acquisition-btn" data-type="original">원시취득</button>
         </div>
 
         <!-- 입력 필드 -->
-        <form id="acquisitionForm">
-            <!-- 부동산 입력 -->
-            <div id="realEstateField" class="input-field" style="display: block;">
-                <label for="realEstateValue">부동산 금액 (원):</label>
-                <input type="text" id="realEstateValue" placeholder="예: 100,000,000">
-                <label for="realEstateType">부동산 종류:</label>
-                <select id="realEstateType">
-                    <option value="residential1">1세대 1주택</option>
-                    <option value="residentialMulti">다주택</option>
-                    <option value="commercial">상업용</option>
-                    <option value="land">토지</option>
-                </select>
-            </div>
+        <div id="inputContainer">
+            <label for="propertyType" id="propertyTypeLabel" style="display: none;">부동산 종류:</label>
+            <select id="propertyType" style="display: none;">
+                <option value="">선택하세요</option>
+                <option value="residential1">1세대 1주택</option>
+                <option value="residentialMulti">다주택</option>
+                <option value="commercial">상업용</option>
+                <option value="land">토지</option>
+            </select>
 
-            <!-- 차량 입력 -->
-            <div id="vehicleField" class="input-field" style="display: none;">
-                <label for="vehiclePrice">차량 금액 (원):</label>
-                <input type="text" id="vehiclePrice" placeholder="예: 30,000,000">
-                <label for="vehicleType">차량 종류:</label>
-                <select id="vehicleType">
-                    <option value="compact">경차</option>
-                    <option value="standard">일반 차량</option>
-                </select>
-            </div>
+            <label for="assetValue" id="assetValueLabel" style="display: none;">부동산 금액 (원):</label>
+            <input type="text" id="assetValue" placeholder="금액 입력" style="display: none;">
 
-            <!-- 기타 자산 입력 -->
-            <div id="otherField" class="input-field" style="display: none;">
-                <label for="otherAssetValue">기타 자산 금액 (원):</label>
-                <input type="text" id="otherAssetValue" placeholder="예: 50,000,000">
-            </div>
-
-            <!-- 기타 비용 -->
             <label for="additionalCosts">기타 비용 (원):</label>
             <input type="text" id="additionalCosts" placeholder="예: 5,000,000">
+        </div>
 
-            <!-- 계산 버튼 -->
-            <button type="button" id="calculateButton">계산하기</button>
-        </form>
+        <!-- 계산 버튼 -->
+        <button id="calculateButton">계산하기</button>
 
-        <!-- 결과 영역 -->
+        <!-- 결과 -->
         <div id="result"></div>
     </div>
 
