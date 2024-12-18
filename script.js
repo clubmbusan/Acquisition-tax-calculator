@@ -62,8 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === giftModal) {
             giftModal.style.display = 'none';
         }
-    });
-}); 
+   }); 
  
     // 계산 버튼 클릭 이벤트
     document.getElementById('calculateButton').addEventListener('click', () => {
