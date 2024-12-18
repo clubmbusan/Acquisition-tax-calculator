@@ -23,12 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     giftButton.addEventListener('click', () => {
         giftModal.style.display = 'flex'; // 모달 표시
     });
-
-    // 모달 닫기 버튼 클릭 시 모달 닫기
-    closeModal.addEventListener('click', () => {
-        giftModal.style.display = 'none'; // 모달 숨김
-    });
-
+  
     // "확인" 버튼 클릭 시 처리
     confirmGiftType.addEventListener('click', () => {
         const giftType = document.getElementById('giftType').value;
