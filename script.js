@@ -57,13 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const ruralTax = Math.floor(acquisitionTax * ruralTaxRate);
         const totalTax = acquisitionTax + educationTax + ruralTax + additionalCosts;
 
-        document.getElementById('result').innerHTML = 
-               <h3>계산 결과</h3>
-               <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
-               <p>지방교육세: ${educationTax.toLocaleString()} 원</p>
-               <p>농어촌특별세: ${ruralTax.toLocaleString()} 원</p>
-               <p>기타 비용: ${additionalCosts.toLocaleString()} 원</p>
-               <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
-           ;
+        document.getElementById('result').innerHTML = `
+             <h3>계산 결과</h3>
+             <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
+             <p>지방교육세: ${educationTax.toLocaleString()} 원</p>
+             <p>농어촌특별세: ${ruralTax.toLocaleString()} 원</p>
+             <p>기타 비용: ${additionalCosts.toLocaleString()} 원</p>
+             <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
+          `;
+        
     });
 });
