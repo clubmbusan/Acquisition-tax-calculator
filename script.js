@@ -1,17 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 재산 유형 선택 필드
     const assetType = document.getElementById('assetType');
+    const realEstateField = document.getElementById('realEstateField');
+    const vehicleField = document.getElementById('vehicleField');
+    const otherField = document.getElementById('otherField');
+
+    // 필드 그룹 초기화
     const fields = {
-        realEstate: document.getElementById('realEstateField'),
-        vehicle: document.getElementById('vehicleField'),
-        other: document.getElementById('otherField'),
+        realEstate: realEstateField,
+        vehicle: vehicleField,
+        other: otherField,
     };
 
-    // 재산 유형 선택 이벤트: 선택된 필드만 보이도록 설정
+    // 재산 유형 변경 시 이벤트 처리
     assetType.addEventListener('change', () => {
-        Object.values(fields).forEach(field => field.style.display = 'none'); // 모든 필드 숨김
-        fields[assetType.value].style.display = 'block'; // 선택된 필드만 표시
+        // 모든 필드를 숨김
+        Object.values(fields).forEach(field => {
+            field.style.display = 'none';
+        });
+
+        // 선택된 재산 유형의 필드만 표시
+        const selectedField = fields[assetType.value];
+        if (selectedField) {
+            selectedField.style.display = 'block';
+        }
     });
+
+    // 초기값 설정 (부동산 필드 표시)
+    fields.realEstate.style.display = 'block';
+});
 
    // === 모달 관련 코드 ===
     const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
