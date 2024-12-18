@@ -1,80 +1,121 @@
+// === DOMContentLoaded 이벤트: 페이지가 로드된 후 실행되는 주요 로직 ===
 document.addEventListener('DOMContentLoaded', () => {
-    // 재산 유형 선택 필드
+    // === [1] 재산 유형 필드 처리 ===
     const assetType = document.getElementById('assetType');
-    const realEstateField = document.getElementById('realEstateField');
-    const vehicleField = document.getElementById('vehicleField');
-    const otherField = document.getElementById('otherField');
-
-    // 필드 그룹 초기화
     const fields = {
-        realEstate: realEstateField,
-        vehicle: vehicleField,
-        other: otherField,
+        realEstate: document.getElementById('realEstateField'),
+        vehicle: document.getElementById('vehicleField'),
+        other: document.getElementById('otherField'),
     };
 
-    // 재산 유형 변경 시 이벤트 처리
+    // 재산 유형 변경 이벤트: 선택된 유형에 따라 필드를 동적으로 표시
     assetType.addEventListener('change', () => {
-        // 모든 필드를 숨김
-        Object.values(fields).forEach(field => {
-            field.style.display = 'none';
-        });
-
-        // 선택된 재산 유형의 필드만 표시
+        Object.values(fields).forEach(field => field.style.display = 'none');
         const selectedField = fields[assetType.value];
-        if (selectedField) {
-            selectedField.style.display = 'block';
+        if (selectedField) selectedField.style.display = 'block';
+    });
+
+    // 초기값 설정: 기본으로 "부동산" 필드 표시
+    assetType.dispatchEvent(new Event('change'));
+
+    // === [2] 매매 모달 관련 코드 ===
+    const saleModal = document.getElementById('saleModal');
+    const confirmSaleType = document.getElementById('confirmSaleType');
+    const saleCategory = document.getElementById('saleCategory');
+    const singleOrMultiOptions = document.getElementById('singleOrMultiOptions');
+    const vehicleOptions = document.getElementById('vehicleOptions');
+    const otherOptions = document.getElementById('otherOptions');
+
+    // 대분류 선택 이벤트: 매매 모달에서 선택된 대분류에 따라 추가 옵션 표시
+    saleCategory.addEventListener('change', () => {
+        singleOrMultiOptions.style.display = 'none';
+        vehicleOptions.style.display = 'none';
+        otherOptions.style.display = 'none';
+
+        if (saleCategory.value === 'singleHousehold' || saleCategory.value === 'multiHousehold') {
+            singleOrMultiOptions.style.display = 'block';
+        } else if (saleCategory.value === 'vehicle') {
+            vehicleOptions.style.display = 'block';
+        } else if (saleCategory.value === 'other') {
+            otherOptions.style.display = 'block';
         }
     });
 
-    // 초기값 설정 (부동산 필드 표시)
-    fields.realEstate.style.display = 'block';
-});
+    // 매매 모달 확인 버튼 클릭 이벤트
+    confirmSaleType.addEventListener('click', () => {
+        const saleAmount = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, ''), 10);
 
-   // === 모달 관련 코드 ===
+        if (isNaN(saleAmount) || saleAmount <= 0) {
+            alert('유효한 금액을 입력하세요.');
+            return;
+        }
+
+        const selectedCategory = saleCategory.value;
+        const acquisitionTax = Math.floor(saleAmount * 0.01); // 예시 세율
+        updateResult('매매 취득 계산 결과', `
+            <p>대분류: ${selectedCategory}</p>
+            <p>취득 금액: ${saleAmount.toLocaleString()} 원</p>
+            <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
+        `);
+
+        saleModal.style.display = 'none';
+    });
+
+    // === [3] 증여 모달 관련 코드 ===
     const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
     const giftModal = document.getElementById('giftModal');   // 증여 모달
-    const closeModal = document.getElementById('closeModal'); // 닫기 버튼
     const confirmGiftType = document.getElementById('confirmGiftType'); // 확인 버튼
 
-    // "증여취득" 버튼 클릭 시 모달 열기
+    // 증여취득 버튼 클릭 시 모달 표시
     giftButton.addEventListener('click', () => {
-        giftModal.style.display = 'flex'; // 모달 표시
+        giftModal.style.display = 'flex';
     });
-  
-    // "확인" 버튼 클릭 시 처리
+
+    // 증여 모달 확인 버튼 클릭 이벤트
     confirmGiftType.addEventListener('click', () => {
         const giftType = document.getElementById('giftType').value;
         const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, '') || '0', 10);
 
-        let taxRate = 0;
-
-        // 증여 종류에 따른 세율 적용
-        if (giftType === 'general') {
-            taxRate = 0.035; // 일반 증여: 3.5%
-        } else if (giftType === 'corporate') {
-            taxRate = 0.04; // 법인 증여: 4%
+        if (isNaN(assetValue) || assetValue <= 0) {
+            alert('유효한 금액을 입력하세요.');
+            return;
         }
 
-        const acquisitionTax = Math.floor(assetValue * taxRate);
+        let taxRate = 0;
+
+        // 증여 종류에 따른 세율 설정
+        if (giftType === 'general') {
+            taxRate = 0.035; // 일반 증여 세율
+        } else if (giftType === 'corporate') {
+            taxRate = 0.04; // 법인 증여 세율
+        }
+
+        const acquisitionTax = Math.floor(assetValue * taxRate); // 취득세 계산
 
         // 결과 출력
-        document.getElementById('result').innerHTML = `
-            <h3>계산 결과</h3>
-            <p>증여 자산 금액: ${assetValue.toLocaleString()} 원</p>
+        updateResult('증여 취득 계산 결과', `
+            <p>증여 종류: ${giftType}</p>
+            <p>증여 금액: ${assetValue.toLocaleString()} 원</p>
             <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
             <p>세율: ${(taxRate * 100).toFixed(1)}%</p>
-        `;
+        `);
 
-        // 모달 닫기
         giftModal.style.display = 'none';
     });
 
-    // 모달 외부 클릭 시 닫기
+    // === [4] 공통 함수: 결과 업데이트 ===
+    function updateResult(title, details) {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `<h3>${title}</h3>${details}`;
+    }
+
+    // === [5] 모달 외부 클릭 공통 처리 ===
     window.addEventListener('click', (e) => {
-        if (e.target === giftModal) {
-            giftModal.style.display = 'none';
+        if (e.target.classList.contains('modal')) {
+            e.target.style.display = 'none';
         }
-   }); 
+    });
+});
  
     // 계산 버튼 클릭 이벤트
     document.getElementById('calculateButton').addEventListener('click', () => {
