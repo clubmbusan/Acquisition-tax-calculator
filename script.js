@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 재산 유형 선택 필드
     const assetType = document.getElementById('assetType');
     const fields = {
         realEstate: document.getElementById('realEstateField'),
@@ -6,26 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
         other: document.getElementById('otherField'),
     };
 
-    // 재산 유형 선택 이벤트
+    // 재산 유형 선택 이벤트: 선택된 필드만 보이도록 설정
     assetType.addEventListener('change', () => {
-        Object.values(fields).forEach(field => field.style.display = 'none');
-        fields[assetType.value].style.display = 'block';
-    });
-
-    // 계산 버튼 클릭 이벤트
-   document.addEventListener('DOMContentLoaded', () => {
-    // 재산 유형에 따라 보여줄 필드 설정
-    const assetType = document.getElementById('assetType');
-    const fields = {
-        realEstate: document.getElementById('realEstateField'),
-        vehicle: document.getElementById('vehicleField'),
-        other: document.getElementById('otherField'),
-    };
-
-    // 재산 유형 선택 이벤트: 선택된 항목만 표시
-    assetType.addEventListener('change', () => {
-        Object.values(fields).forEach(field => field.style.display = 'none'); // 모든 필드 숨기기
-        fields[assetType.value].style.display = 'block'; // 선택된 필드만 보이기
+        Object.values(fields).forEach(field => field.style.display = 'none'); // 모든 필드 숨김
+        fields[assetType.value].style.display = 'block'; // 선택된 필드만 표시
     });
 
     // 계산 버튼 클릭 이벤트
