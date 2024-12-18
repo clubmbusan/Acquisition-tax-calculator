@@ -8,96 +8,56 @@
 </head>
 <body>
     <div class="calculator">
-        <h1>취득세 계산기 (2024년 기준)</h1>
+        <h1>취득세 계산기 <strong>(2024년 기준)</strong></h1>
 
         <!-- 취득의 종류 버튼 -->
         <div id="acquisitionButtons">
-            <button class="modal-open-btn" data-modal="modalSale">매매</button>
-            <button class="modal-open-btn" data-modal="modalGift">증여</button>
-            <button class="modal-open-btn" data-modal="modalInheritance">상속</button>
-            <button class="modal-open-btn" data-modal="modalOriginal">원시취득</button>
+            <button class="acquisition-btn" data-type="realEstate">부동산</button>
+            <button class="acquisition-btn" data-type="vehicle">차량</button>
+            <button class="acquisition-btn" data-type="other">기타</button>
         </div>
 
-        <!-- 모달 1: 매매 -->
-        <div id="modalSale" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>매매 취득세 계산</h2>
-                <form id="saleForm">
-                    <label for="saleAssetType">재산 유형:</label>
-                    <select id="saleAssetType">
-                        <option value="realEstate" selected>부동산</option>
-                        <option value="vehicle">차량</option>
-                        <option value="other">기타</option>
-                    </select>
-
-                    <div id="saleRealEstateField" style="display: block;">
-                        <label for="saleRealEstateValue">부동산 금액 (원):</label>
-                        <input type="text" id="saleRealEstateValue" placeholder="예: 100,000,000">
-                        <label for="saleRealEstateType">부동산 종류:</label>
-                        <select id="saleRealEstateType">
-                            <option value="residential1">1세대 1주택</option>
-                            <option value="residentialMulti">다주택</option>
-                            <option value="commercial">상업용</option>
-                            <option value="land">토지</option>
-                        </select>
-                    </div>
-
-                    <div id="saleVehicleField" style="display: none;">
-                        <label for="saleVehiclePrice">차량 금액 (원):</label>
-                        <input type="text" id="saleVehiclePrice" placeholder="예: 30,000,000">
-                        <label for="saleVehicleType">차량 종류:</label>
-                        <select id="saleVehicleType">
-                            <option value="standard">일반 차량</option>
-                            <option value="compact">경차</option>
-                            <option value="used">중고차</option>
-                        </select>
-                    </div>
-
-                    <div id="saleOtherField" style="display: none;">
-                        <label for="saleOtherAssetValue">기타 자산 금액 (원):</label>
-                        <input type="text" id="saleOtherAssetValue" placeholder="예: 50,000,000">
-                    </div>
-
-                    <label for="saleAdditionalCosts">기타 비용 (원):</label>
-                    <input type="text" id="saleAdditionalCosts" placeholder="예: 5,000,000">
-
-                    <button type="button" id="calculateSaleTax">계산하기</button>
-                </form>
+        <!-- 입력 필드 -->
+        <form id="acquisitionForm">
+            <!-- 부동산 입력 -->
+            <div id="realEstateField" class="input-field" style="display: block;">
+                <label for="realEstateValue">부동산 금액 (원):</label>
+                <input type="text" id="realEstateValue" placeholder="예: 100,000,000">
+                <label for="realEstateType">부동산 종류:</label>
+                <select id="realEstateType">
+                    <option value="residential1">1세대 1주택</option>
+                    <option value="residentialMulti">다주택</option>
+                    <option value="commercial">상업용</option>
+                    <option value="land">토지</option>
+                </select>
             </div>
-        </div>
 
-        <!-- 모달 2: 증여 -->
-        <div id="modalGift" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>증여 취득세 계산</h2>
-                <!-- 증여 모달 내용 -->
-                <!-- 동일한 구조로 구성 -->
+            <!-- 차량 입력 -->
+            <div id="vehicleField" class="input-field" style="display: none;">
+                <label for="vehiclePrice">차량 금액 (원):</label>
+                <input type="text" id="vehiclePrice" placeholder="예: 30,000,000">
+                <label for="vehicleType">차량 종류:</label>
+                <select id="vehicleType">
+                    <option value="compact">경차</option>
+                    <option value="standard">일반 차량</option>
+                </select>
             </div>
-        </div>
 
-        <!-- 모달 3: 상속 -->
-        <div id="modalInheritance" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>상속 취득세 계산</h2>
-                <!-- 상속 모달 내용 -->
-                <!-- 동일한 구조로 구성 -->
+            <!-- 기타 자산 입력 -->
+            <div id="otherField" class="input-field" style="display: none;">
+                <label for="otherAssetValue">기타 자산 금액 (원):</label>
+                <input type="text" id="otherAssetValue" placeholder="예: 50,000,000">
             </div>
-        </div>
 
-        <!-- 모달 4: 원시취득 -->
-        <div id="modalOriginal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>원시취득 취득세 계산</h2>
-                <!-- 원시취득 모달 내용 -->
-                <!-- 동일한 구조로 구성 -->
-            </div>
-        </div>
+            <!-- 기타 비용 -->
+            <label for="additionalCosts">기타 비용 (원):</label>
+            <input type="text" id="additionalCosts" placeholder="예: 5,000,000">
 
-        <!-- 결과 -->
+            <!-- 계산 버튼 -->
+            <button type="button" id="calculateButton">계산하기</button>
+        </form>
+
+        <!-- 결과 영역 -->
         <div id="result"></div>
     </div>
 
