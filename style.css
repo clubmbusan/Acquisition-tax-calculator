@@ -45,3 +45,14 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+/* 추가된 부분 */
+#actionButtons {
+    display: block; /* 버튼 컨테이너를 세로 정렬 */
+}
+
+#actionButtons button {
+    display: block; /* 각 버튼을 블록 요소로 설정 */
+    width: 100%; /* 버튼 너비를 입력 필드와 동일하게 */
+    margin-bottom: 15px; /* 버튼 간격 */
+}
