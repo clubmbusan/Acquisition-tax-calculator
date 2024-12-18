@@ -13,6 +13,58 @@ document.addEventListener('DOMContentLoaded', () => {
         fields[assetType.value].style.display = 'block'; // 선택된 필드만 표시
     });
 
+   // === 모달 관련 코드 ===
+    const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
+    const giftModal = document.getElementById('giftModal');   // 증여 모달
+    const closeModal = document.getElementById('closeModal'); // 닫기 버튼
+    const confirmGiftType = document.getElementById('confirmGiftType'); // 확인 버튼
+
+    // "증여취득" 버튼 클릭 시 모달 열기
+    giftButton.addEventListener('click', () => {
+        giftModal.style.display = 'flex'; // 모달 표시
+    });
+
+    // 모달 닫기 버튼 클릭 시 모달 닫기
+    closeModal.addEventListener('click', () => {
+        giftModal.style.display = 'none'; // 모달 숨김
+    });
+
+    // "확인" 버튼 클릭 시 처리
+    confirmGiftType.addEventListener('click', () => {
+        const giftType = document.getElementById('giftType').value;
+        const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, '') || '0', 10);
+
+        let taxRate = 0;
+
+        // 증여 종류에 따른 세율 적용
+        if (giftType === 'general') {
+            taxRate = 0.035; // 일반 증여: 3.5%
+        } else if (giftType === 'corporate') {
+            taxRate = 0.04; // 법인 증여: 4%
+        }
+
+        const acquisitionTax = Math.floor(assetValue * taxRate);
+
+        // 결과 출력
+        document.getElementById('result').innerHTML = `
+            <h3>계산 결과</h3>
+            <p>증여 자산 금액: ${assetValue.toLocaleString()} 원</p>
+            <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
+            <p>세율: ${(taxRate * 100).toFixed(1)}%</p>
+        `;
+
+        // 모달 닫기
+        giftModal.style.display = 'none';
+    });
+
+    // 모달 외부 클릭 시 닫기
+    window.addEventListener('click', (e) => {
+        if (e.target === giftModal) {
+            giftModal.style.display = 'none';
+        }
+    });
+}); 
+ 
     // 계산 버튼 클릭 이벤트
     document.getElementById('calculateButton').addEventListener('click', () => {
         let assetValue = 0; // 자산 금액 초기화
