@@ -171,5 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>농어촌특별세: ${ruralTax.toLocaleString()} 원</p>
             <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
         `;
-    });
-});
+    }); // 닫는 괄호 및 세미콜론 위치 확인
+}); // DOMContentLoaded 이벤트 닫는 괄호
+    
