@@ -103,6 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
         giftModal.style.display = 'none';
     });
 
+    // 닫기 버튼 클릭 이벤트
+closeGiftModal.addEventListener('click', () => {
+    giftModal.style.display = 'none';
+});
+    
     // === [4] 공통 함수: 결과 업데이트 ===
     function updateResult(title, details) {
         const resultDiv = document.getElementById('result');
