@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 계산 버튼 클릭 이벤트
     document.getElementById('calculateButton').addEventListener('click', () => {
-        const additionalCosts = parseInt(document.getElementById('additionalCosts').value.replace(/,/g, '') || '0', 10);
-
         let assetValue = 0;
         let taxRate = 0;
         let educationTaxRate = 0.1; // 지방교육세율
