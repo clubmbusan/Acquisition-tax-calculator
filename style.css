@@ -8,14 +8,14 @@ body {
 
 /* ====== 계산기 컨테이너 스타일 ====== */
 .calculator {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    overflow: visible; /* 버튼이나 결과 영역이 숨겨지지 않도록 설정 */
+    max-width: 600px; /* 컨테이너의 최대 너비 */
+    margin: 50px auto; /* 화면 가운데 정렬 */
+    padding: 20px 20px 50px; /* 하단 여백 추가 */
+    background: #fff; /* 흰색 배경 */
+    border-radius: 10px; /* 둥근 모서리 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    box-sizing: border-box; /* 내부 패딩 포함 박스 크기 계산 */
+    overflow: hidden; /* 컨텐츠가 벗어나지 않도록 설정 */
 }
 
 /* ====== 결과 출력 영역 스타일 ====== */
