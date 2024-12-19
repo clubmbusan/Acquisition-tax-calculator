@@ -114,26 +114,38 @@ button:hover {
     margin-bottom: 10px; /* 버튼 간 간격 통일 */
 }
 
-/* ====== 확인 버튼 스타일 ====== */
-.modal-content button#confirmGiftType {
+/* 확인 버튼 스타일 */
+.modal-content .confirm-btn {
     background-color: #FF4C4C; /* 붉은색 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 10px;
 }
 
-.modal-content button#confirmGiftType:hover {
+.modal-content .confirm-btn:hover {
     background-color: #E03B3B; /* 어두운 붉은색 */
 }
 
-/* ====== 닫기 버튼 스타일 ====== */
-.modal-content button#closeGiftModal {
+/* 닫기 버튼 스타일 */
+.modal-content .close-btn {
     background-color: #808080; /* 회색 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 10px;
 }
 
-.modal-content button#closeGiftModal:hover {
+.modal-content .close-btn:hover {
     background-color: #606060; /* 어두운 회색 */
-}
-
-.modal-content button:hover {
-    background-color: #E03B3B; /* 호버 시 진한 붉은색 */
 }
 
 /* ====== 버튼 세로 정렬 스타일 ====== */
