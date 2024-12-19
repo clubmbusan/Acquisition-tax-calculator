@@ -27,11 +27,6 @@ realEstateValue.addEventListener('input', () => {
     realEstateValue.value = value ? parseInt(value, 10).toLocaleString() : '';
 });
 
-// === [매매 모달 관련 코드] ===
-// 매매취득 버튼, 모달 관련 이벤트 리스너가 여기 아래에 추가됩니다.
-const saleButton = document.getElementById('saleButton');
-const saleModal = document.getElementById('saleModal');
-
   // === 매매 모달 관련 코드 ===
 const saleButton = document.getElementById('saleButton');   // 매매취득 버튼
 const saleModal = document.getElementById('saleModal');     // 매매취득 모달
