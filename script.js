@@ -27,13 +27,17 @@ realEstateValue.addEventListener('input', () => {
     realEstateValue.value = value ? parseInt(value, 10).toLocaleString() : '';
 });
 
-// === 매매 모달 ===
 document.addEventListener('DOMContentLoaded', () => {
     // [1] 매매취득 관련 요소 가져오기
     const saleButton = document.getElementById('saleButton'); // 매매취득 버튼
     const saleModal = document.getElementById('saleModal');   // 매매취득 모달
     const confirmSaleType = document.getElementById('confirmSaleType'); // 매매취득 확인 버튼
     const closeSaleModal = document.getElementById('closeSaleModal');   // 매매취득 모달 닫기 버튼
+
+    console.log('매매취득 버튼:', saleButton); // 버튼 요소 확인
+    console.log('매매취득 모달:', saleModal);  // 모달 요소 확인
+    console.log('매매취득 확인 버튼:', confirmSaleType); // 확인 버튼 확인
+    console.log('모달 닫기 버튼:', closeSaleModal); // 닫기 버튼 확인
 
     // [2] 매매취득 모달 내 옵션 관련 요소
     const saleCategory = document.getElementById('saleCategory');       // 대분류 선택
@@ -44,7 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // [3] 매매취득 버튼 클릭 이벤트: 모달 열기
     if (saleButton && saleModal) {
         saleButton.addEventListener('click', () => {
+            console.log('매매취득 버튼 클릭됨'); // 클릭 이벤트 확인
             const selectedType = realEstateType?.value; // 부동산 종류 값 가져오기
+            console.log('선택된 부동산 종류:', selectedType); // 선택된 부동산 종류 로그
 
             // 초기화: 모든 옵션 숨기기
             if (saleCategory) saleCategory.innerHTML = '';
@@ -72,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             saleModal.style.display = 'flex'; // 매매취득 모달 표시
+            console.log('매매취득 모달 열림: display = flex'); // 모달 열림 로그
         });
     } else {
         console.error('매매취득 버튼 또는 모달이 존재하지 않습니다.');
@@ -80,11 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // [4] 매매취득 확인 버튼 클릭 이벤트: 계산 처리
     if (confirmSaleType) {
         confirmSaleType.addEventListener('click', () => {
+            console.log('매매취득 확인 버튼 클릭됨'); // 확인 버튼 클릭 로그
             const selectedType = realEstateType?.value || ''; // 부동산 종류
             const selectedCategory = saleCategory?.value || ''; // 대분류 선택
             let taxRate = 0;
 
             const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, ''), 10) || 0; // 금액 입력 값
+            console.log('입력된 금액:', assetValue); // 금액 로그
+
             if (isNaN(assetValue) || assetValue <= 0) {
                 alert('유효한 금액을 입력하세요.');
                 return;
@@ -102,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const acquisitionTax = Math.floor(assetValue * taxRate); // 취득세 계산
+            console.log('계산된 세율:', taxRate); // 세율 로그
+            console.log('계산된 취득세:', acquisitionTax); // 취득세 로그
 
             // 결과 출력
             updateResult('매매 취득 계산 결과', `
@@ -120,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeSaleModal && saleModal) {
         closeSaleModal.addEventListener('click', () => {
             saleModal.style.display = 'none'; // 모달 닫기
+            console.log('매매취득 모달 닫힘: display = none'); // 닫힘 로그
         });
     }
 
@@ -133,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('click', (e) => {
         if (e.target === saleModal) {
             saleModal.style.display = 'none'; // 모달 닫기
+            console.log('모달 외부 클릭됨: 모달 닫힘'); // 외부 클릭 로그
         }
     });
 });
