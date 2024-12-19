@@ -18,6 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // 초기값 설정: 기본으로 "부동산" 필드 표시
     assetType.dispatchEvent(new Event('change'));
 
+    // === 금액 입력 필드에 콤마 자동 적용 ===
+const realEstateValue = document.getElementById('realEstateValue');
+
+realEstateValue.addEventListener('input', () => {
+    // 입력된 값을 숫자로 변환 후 콤마 추가
+    const value = realEstateValue.value.replace(/,/g, '').replace(/[^0-9]/g, '');
+    realEstateValue.value = value ? parseInt(value, 10).toLocaleString() : '';
+});
+
+// === [매매 모달 관련 코드] ===
+// 매매취득 버튼, 모달 관련 이벤트 리스너가 여기 아래에 추가됩니다.
+const saleButton = document.getElementById('saleButton');
+const saleModal = document.getElementById('saleModal');
+
   // === 매매 모달 관련 코드 ===
 const saleButton = document.getElementById('saleButton');   // 매매취득 버튼
 const saleModal = document.getElementById('saleModal');     // 매매취득 모달
