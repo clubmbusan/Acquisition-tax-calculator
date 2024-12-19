@@ -74,7 +74,7 @@ button:hover {
 #calculateButton {
     border: none; /* 버튼 테두리 제거 */
     outline: none; /* 포커스 외곽선 제거 */
-    margin: 0; /* 여백 제거 */
+    margin: 0; /* 버튼 여백 제거 */
     padding: 10px; /* 버튼 내부 여백 */
     background-color: #007BFF; /* 버튼 배경색 */
     color: #fff; /* 텍스트 색상 */
@@ -84,12 +84,14 @@ button:hover {
     display: block; /* 버튼을 블록 요소로 설정 */
     width: 100%; /* 부모 너비에 맞춤 */
     box-sizing: border-box; /* 내부 패딩 포함 크기 계산 */
+    box-shadow: none; /* 버튼 그림자 제거 */
 }
 
-/* ====== 버튼 하단 추가 여백 제거 ====== */
-#calculateButton:after {
-    content: ""; /* 불필요한 요소 제거 */
-    display: none; /* 가상 요소 표시 안 함 */
+/* ====== 버튼 하단 여백과 줄 제거 ====== */
+#calculateButton:after,
+#calculateButton:before {
+    content: none; /* 불필요한 가상 요소 제거 */
+    display: none;
 }
 
 /* ====== 버튼 호버 스타일 ====== */
