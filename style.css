@@ -56,7 +56,13 @@ button:hover {
     background-color: #007BFF; /* 계산하기 버튼 색상: 파란색 */
     color: white;
     border: none;
+    padding: 10px; /* 버튼 안 텍스트 여백 */
+    font-size: 16px; /* 글자 크기 */
     cursor: pointer;
+    border-radius: 5px; /* 둥근 모서리 */
+    width: 100%; /* 입력 필드와 너비 통일 */
+    box-sizing: border-box; /* 박스 크기 계산 방식 */
+    margin-top: 20px; /* 위 버튼들과 간격 조정 */
 }
 
 #calculateButton:hover {
