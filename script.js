@@ -27,108 +27,89 @@ realEstateValue.addEventListener('input', () => {
     realEstateValue.value = value ? parseInt(value, 10).toLocaleString() : '';
 });
 
-  // === 매매 모달 관련 코드 ===
+  // 매매취득 모달 관련 코드
 const saleButton = document.getElementById('saleButton');   // 매매취득 버튼
 const saleModal = document.getElementById('saleModal');     // 매매취득 모달
 const confirmSaleType = document.getElementById('confirmSaleType'); // 확인 버튼
 const closeSaleModal = document.getElementById('closeSaleModal');   // 닫기 버튼
 
 const saleCategory = document.getElementById('saleCategory');
-const singleOrMultiOptions = document.getElementById('singleOrMultiOptions'); // 부동산 옵션
-const vehicleOptions = document.getElementById('vehicleOptions');             // 차량 옵션
-const otherOptions = document.getElementById('otherOptions');                 // 기타 옵션
+const houseOptions = document.getElementById('houseOptions'); // 주택 옵션
+const landOptions = document.getElementById('landOptions');   // 토지 옵션
+const realEstateType = document.getElementById('realEstateType'); // 부동산 종류
 
 // 매매취득 버튼 클릭 시 모달 표시
 saleButton.addEventListener('click', () => {
-    const selectedAssetType = document.getElementById('assetType').value;
+    const selectedType = realEstateType.value;
 
-    // 모든 옵션 초기화
-    singleOrMultiOptions.style.display = 'none';
-    vehicleOptions.style.display = 'none';
-    otherOptions.style.display = 'none';
+    // 초기화
+    saleCategory.innerHTML = '';
+    houseOptions.style.display = 'none';
+    landOptions.style.display = 'none';
 
-    // 재산 유형에 따른 모달 UI 설정
-    if (selectedAssetType === 'realEstate') {
-        // 부동산: 대분류 및 추가 옵션 표시
-        saleCategory.style.display = 'block';
+    // 부동산 종류에 따라 대분류 옵션 추가
+    if (selectedType === 'house') {
         saleCategory.innerHTML = `
             <option value="singleHousehold">1세대 1주택</option>
             <option value="multiHousehold">다주택</option>
-            <option value="commercial">상업용</option>
-            <option value="land">토지</option>
         `;
-        singleOrMultiOptions.style.display = 'block';
-    } else if (selectedAssetType === 'vehicle') {
-        // 차량: 차량 옵션 및 사업용/비사업용 옵션 표시
-        saleCategory.style.display = 'none'; // 대분류 숨김
-        vehicleOptions.style.display = 'block';
-    } else if (selectedAssetType === 'other') {
-        // 기타 자산: 추가 조건 없이 메시지만 표시
-        saleCategory.style.display = 'none';
-        otherOptions.style.display = 'block';
+        houseOptions.style.display = 'block'; // 1세대 여부 옵션 표시
+    } else if (selectedType === 'building') {
+        saleCategory.innerHTML = `
+            <option value="residential">주거용</option>
+            <option value="nonResidential">비주거용</option>
+        `;
+    } else if (selectedType === 'land') {
+        saleCategory.innerHTML = `
+            <option value="agricultural">농지</option>
+            <option value="generalLand">일반 토지</option>
+        `;
+        landOptions.style.display = 'block'; // 농지 여부 옵션 표시
     }
 
-    // 모달 표시
-    saleModal.style.display = 'flex';
+    saleModal.style.display = 'flex'; // 모달 표시
 });
 
 // 확인 버튼 클릭 이벤트
 confirmSaleType.addEventListener('click', () => {
-    const selectedAssetType = document.getElementById('assetType').value;
+    const selectedType = realEstateType.value; // 부동산 종류
+    const selectedCategory = saleCategory.value; // 대분류 선택
     let taxRate = 0;
 
-    // 재산 유형별 세율 계산
-    if (selectedAssetType === 'realEstate') {
-        const selectedCategory = saleCategory.value;
-        const isAdjustedArea = document.getElementById('isAdjustedArea')?.value === 'yes';
-
-        if (selectedCategory === 'singleHousehold') {
-            taxRate = isAdjustedArea ? 0.015 : 0.01;
-        } else if (selectedCategory === 'multiHousehold') {
-            taxRate = isAdjustedArea ? 0.08 : 0.04;
-        } else if (selectedCategory === 'commercial' || selectedCategory === 'land') {
-            taxRate = 0.04;
-        }
-    } else if (selectedAssetType === 'vehicle') {
-        const isBusinessVehicle = document.getElementById('isBusinessVehicle')?.value === 'yes';
-        taxRate = isBusinessVehicle ? 0.07 : 0.05;
-    } else if (selectedAssetType === 'other') {
-        taxRate = 0.03; // 기타 자산 고정 세율
-    }
-
-    // 세금 계산
     const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, ''), 10) || 0;
     if (isNaN(assetValue) || assetValue <= 0) {
         alert('유효한 금액을 입력하세요.');
         return;
     }
 
+    // 세율 계산 로직
+    if (selectedType === 'house') {
+        const isSingleHousehold = document.getElementById('isSingleHousehold').value === 'yes';
+        taxRate = isSingleHousehold ? 0.01 : 0.015; // 1세대 여부에 따른 세율
+    } else if (selectedType === 'building') {
+        taxRate = selectedCategory === 'residential' ? 0.028 : 0.03; // 건축물 세율
+    } else if (selectedType === 'land') {
+        const isAgriculturalLand = document.getElementById('isAgriculturalLand').value === 'yes';
+        taxRate = isAgriculturalLand ? 0.023 : 0.028; // 농지 여부에 따른 세율
+    }
+
     const acquisitionTax = Math.floor(assetValue * taxRate);
-    const ruralTax = selectedAssetType === 'vehicle' ? Math.floor(assetValue * 0.02) : 0;
 
     // 결과 출력
     updateResult('매매 취득 계산 결과', `
-        <p>재산 유형: ${selectedAssetType}</p>
+        <p>부동산 종류: ${selectedType === 'house' ? '주택' : selectedType === 'building' ? '건축물' : '토지'}</p>
+        <p>대분류: ${selectedCategory}</p>
         <p>취득 금액: ${assetValue.toLocaleString()} 원</p>
         <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
-        ${ruralTax > 0 ? `<p>농어촌특별세: ${ruralTax.toLocaleString()} 원</p>` : ''}
         <p>세율: ${(taxRate * 100).toFixed(1)}%</p>
     `);
 
-    // 모달 닫기
-    saleModal.style.display = 'none';
+    saleModal.style.display = 'none'; // 모달 닫기
 });
 
 // 닫기 버튼 클릭 이벤트
 closeSaleModal.addEventListener('click', () => {
     saleModal.style.display = 'none';
-});
-
-// 모달 외부 클릭 시 닫기
-window.addEventListener('click', (e) => {
-    if (e.target === saleModal) {
-        saleModal.style.display = 'none';
-    }
 });
 
 // 결과 업데이트 함수
