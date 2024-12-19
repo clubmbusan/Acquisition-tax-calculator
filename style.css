@@ -82,9 +82,11 @@ button:hover {
 
 /* ====== 버튼 하단 추가 여백 제거 ====== */
 #calculateButton:after {
-    content: none; /* 버튼 하단 불필요한 요소 제거 */
+    content: ""; /* 불필요한 요소 제거 */
+    display: none; /* 가상 요소 표시 안 함 */
 }
 
+/* ====== 버튼 호버 스타일 ====== */
 #calculateButton:hover {
     background-color: #0056b3; /* 호버 시 진한 파란색 */
 }
