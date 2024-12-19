@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
  
-/ 증여 모달 관련 코드
+// 증여 모달 관련 코드
 const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
 const giftModal = document.getElementById('giftModal');   // 증여 모달
 const confirmGiftType = document.getElementById('confirmGiftType'); // 확인 버튼
