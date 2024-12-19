@@ -115,11 +115,12 @@ function updateResult(title, details) {
     resultDiv.innerHTML = `<h3>${title}</h3>${details}`;
 }
 
-    // === [3] 증여 모달 관련 코드 ===
-    const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
-    const giftModal = document.getElementById('giftModal');   // 증여 모달
-    const confirmGiftType = document.getElementById('confirmGiftType'); // 확인 버튼
-
+    // 증여 모달 관련 코드
+const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
+const giftModal = document.getElementById('giftModal');   // 증여 모달
+const confirmGiftType = document.getElementById('confirmGiftType'); // 확인 버튼
+const closeGiftModal = document.getElementById('closeGiftModal');   // 닫기 버튼
+ 
     // 증여취득 버튼 클릭 시 모달 표시
     giftButton.addEventListener('click', () => {
         giftModal.style.display = 'flex';
