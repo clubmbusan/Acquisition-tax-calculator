@@ -74,7 +74,7 @@ button:hover {
     width: 100%; /* 계산기와 동일 너비 */
     box-sizing: border-box; /* 박스 크기 계산 방식 */
     margin-top: 20px; /* 위 버튼들과 간격 */
-    margin-bottom: 0; /* 추가적인 하단 여백 제거 */
+    margin-bottom: 10; /* 추가적인 하단 여백 제거 */
     position: relative; /* 부모 요소에 대해 상대적 위치 */
 }
 
