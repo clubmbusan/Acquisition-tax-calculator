@@ -27,21 +27,25 @@ realEstateValue.addEventListener('input', () => {
     realEstateValue.value = value ? parseInt(value, 10).toLocaleString() : '';
 });
 
- document.addEventListener('DOMContentLoaded', () => {
-    const saleButton = document.getElementById('saleButton');
-    const saleModal = document.getElementById('saleModal');
-    const confirmSaleType = document.getElementById('confirmSaleType');
-    const closeSaleModal = document.getElementById('closeSaleModal');
+// === 매매 모달 ===
+document.addEventListener('DOMContentLoaded', () => {
+    // [1] 매매취득 관련 요소 가져오기
+    const saleButton = document.getElementById('saleButton'); // 매매취득 버튼
+    const saleModal = document.getElementById('saleModal');   // 매매취득 모달
+    const confirmSaleType = document.getElementById('confirmSaleType'); // 매매취득 확인 버튼
+    const closeSaleModal = document.getElementById('closeSaleModal');   // 매매취득 모달 닫기 버튼
 
-    const saleCategory = document.getElementById('saleCategory');
-    const houseOptions = document.getElementById('houseOptions');
-    const landOptions = document.getElementById('landOptions');
-    const realEstateType = document.getElementById('realEstateType');
+    // [2] 매매취득 모달 내 옵션 관련 요소
+    const saleCategory = document.getElementById('saleCategory');       // 대분류 선택
+    const houseOptions = document.getElementById('houseOptions');       // 주택 옵션
+    const landOptions = document.getElementById('landOptions');         // 토지 옵션
+    const realEstateType = document.getElementById('realEstateType');   // 부동산 종류
 
+    // [3] 매매취득 버튼 클릭 이벤트: 모달 열기
     saleButton.addEventListener('click', () => {
-        const selectedType = realEstateType?.value;
+        const selectedType = realEstateType?.value; // 부동산 종류 값 가져오기
 
-        // 초기화
+        // 초기화: 모든 옵션 숨기기
         if (saleCategory) saleCategory.innerHTML = '';
         if (houseOptions) houseOptions.style.display = 'none';
         if (landOptions) landOptions.style.display = 'none';
@@ -52,7 +56,7 @@ realEstateValue.addEventListener('input', () => {
                 <option value="singleHousehold">1세대 1주택</option>
                 <option value="multiHousehold">다주택</option>
             `;
-            if (houseOptions) houseOptions.style.display = 'block';
+            if (houseOptions) houseOptions.style.display = 'block'; // 주택 옵션 표시
         } else if (selectedType === 'building') {
             saleCategory.innerHTML = `
                 <option value="residential">주거용</option>
@@ -63,18 +67,19 @@ realEstateValue.addEventListener('input', () => {
                 <option value="agricultural">농지</option>
                 <option value="generalLand">일반 토지</option>
             `;
-            if (landOptions) landOptions.style.display = 'block';
+            if (landOptions) landOptions.style.display = 'block'; // 토지 옵션 표시
         }
 
-        saleModal.style.display = 'flex';
+        saleModal.style.display = 'flex'; // 매매취득 모달 표시
     });
 
+    // [4] 매매취득 확인 버튼 클릭 이벤트: 계산 처리
     confirmSaleType.addEventListener('click', () => {
-        const selectedType = realEstateType?.value || '';
-        const selectedCategory = saleCategory?.value || '';
+        const selectedType = realEstateType?.value || ''; // 부동산 종류
+        const selectedCategory = saleCategory?.value || ''; // 대분류 선택
         let taxRate = 0;
 
-        const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, ''), 10) || 0;
+        const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, ''), 10) || 0; // 금액 입력 값
         if (isNaN(assetValue) || assetValue <= 0) {
             alert('유효한 금액을 입력하세요.');
             return;
@@ -83,16 +88,17 @@ realEstateValue.addEventListener('input', () => {
         // 세율 계산 로직
         if (selectedType === 'house') {
             const isSingleHousehold = document.getElementById('isSingleHousehold')?.value === 'yes';
-            taxRate = isSingleHousehold ? 0.01 : 0.015;
+            taxRate = isSingleHousehold ? 0.01 : 0.015; // 1세대 여부에 따른 세율
         } else if (selectedType === 'building') {
-            taxRate = selectedCategory === 'residential' ? 0.028 : 0.03;
+            taxRate = selectedCategory === 'residential' ? 0.028 : 0.03; // 주거용 및 비주거용
         } else if (selectedType === 'land') {
             const isAgriculturalLand = document.getElementById('isAgriculturalLand')?.value === 'yes';
-            taxRate = isAgriculturalLand ? 0.023 : 0.028;
+            taxRate = isAgriculturalLand ? 0.023 : 0.028; // 농지 여부에 따른 세율
         }
 
-        const acquisitionTax = Math.floor(assetValue * taxRate);
+        const acquisitionTax = Math.floor(assetValue * taxRate); // 취득세 계산
 
+        // 결과 출력
         updateResult('매매 취득 계산 결과', `
             <p>부동산 종류: ${selectedType}</p>
             <p>대분류: ${selectedCategory}</p>
@@ -101,33 +107,36 @@ realEstateValue.addEventListener('input', () => {
             <p>세율: ${(taxRate * 100).toFixed(1)}%</p>
         `);
 
-        saleModal.style.display = 'none';
+        saleModal.style.display = 'none'; // 매매취득 모달 닫기
     });
 
+    // [5] 매매취득 모달 닫기 버튼 클릭 이벤트
     closeSaleModal.addEventListener('click', () => {
-        saleModal.style.display = 'none';
+        saleModal.style.display = 'none'; // 모달 닫기
     });
-});
 
-    // 닫기 버튼 클릭 이벤트
-closeGiftModal.addEventListener('click', () => {
-    giftModal.style.display = 'none';
-});
-    
-    // === [4] 공통 함수: 결과 업데이트 ===
+    // === [6] 증여 모달 닫기 이벤트 ===
+    const closeGiftModal = document.getElementById('closeGiftModal'); // 증여 모달 닫기 버튼
+    const giftModal = document.getElementById('giftModal'); // 증여 모달
+
+    closeGiftModal.addEventListener('click', () => {
+        giftModal.style.display = 'none';
+    });
+
+    // === [7] 공통 함수: 결과 업데이트 ===
     function updateResult(title, details) {
-        const resultDiv = document.getElementById('result');
+        const resultDiv = document.getElementById('result'); // 결과 표시 영역
         resultDiv.innerHTML = `<h3>${title}</h3>${details}`;
     }
 
-    // === [5] 모달 외부 클릭 공통 처리 ===
+    // === [8] 모달 외부 클릭 시 닫기 ===
     window.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal')) {
-            e.target.style.display = 'none';
+            e.target.style.display = 'none'; // 모달 닫기
         }
     });
 });
-
+ 
 / 증여 모달 관련 코드
 const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
 const giftModal = document.getElementById('giftModal');   // 증여 모달
