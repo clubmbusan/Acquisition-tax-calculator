@@ -150,7 +150,11 @@ confirmSaleType.addEventListener('click', () => {
     
     // 1-1. 1주택자 (일시적 2주택 포함)
     if (acquisitionType === 'oneHouse') {
-      if (houseType === 'highValue') {
+     if (houseType === 'premium') {
+      // 고급 주택: 12% 중과세
+      acquisitionTax = Math.floor(assetValue * 0.12);
+      appliedTaxRate = "12%";
+      } else if (houseType === 'highValue') { 
         // 고가 주택 (9억 초과): 무조건 3%
         acquisitionTax = Math.floor(assetValue * 0.03);
         appliedTaxRate = "3%";
